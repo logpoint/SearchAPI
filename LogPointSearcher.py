@@ -1,8 +1,3 @@
-
-__author__="bunkdeath"
-__date__ ="$Dec 21, 2012 2:43:56 PM$"
-
-
 import json
 import time
 import Config
@@ -119,7 +114,7 @@ class LogPointSearcher:
         get repo_name and its ip, and reference back to logpoint
         '''
         for repo in allowed_repos:
-            address, repo_name = repo.get('address').split('/')
+            address, repo_name = repo.get('address'), repo.get('repo')
             logpoint_ip, port = address.split(':')
             repos.append(Repo(logpoint[logpoint_ip], repo_name))
         return repos
