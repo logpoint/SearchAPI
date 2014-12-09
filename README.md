@@ -1,12 +1,12 @@
 SearchAPI
 =========
-REST api to fetch search logs from LogInspect
+REST api to fetch search logs from LogPoint
 
-Edit "search.conf" file and enter LogInspect IP address, request_type(http ot https), username created in LogInspect and user's secret key as seen at the bottom of the user preference page.
+Edit "Config.py" file and enter logpoint's IP address, request_type(http ot https), username created in logpoint and user's secret key as seen under My Preferences -> Misc.
 
-Then run: python search.py
+Then run: python main.py
 
-The search queries, result limit, time_range and repos to search for can be edited in search.py
+The search queries, result limit, time_range and repos to search for can be edited in LogPointSearcher.py
 
 <b>SEARCH_TIME_RANGE examples:</b>
 
@@ -15,6 +15,8 @@ Last x minute(s), hour(s), day(s), month(s), year(s)
 2012/08/12 00:00:00 To 2012/08/14 00:00:00
 
 2012/08/12 12:00:00 AM To 2012/08/13 12:00:00 PM
+
+Last 4 hours
 
 <b>SEARCH_REPOS examples:</b>
 
