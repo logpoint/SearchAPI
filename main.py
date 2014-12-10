@@ -19,7 +19,7 @@ class Searcher(object):
               print key, ': ', dic[key]
           print '\n\n'
 
-  def get_logopints(self, ):
+  def get_logpoints(self, ):
     print 'Getting LogPoints'
     logpoints = searcher.get_log_points()
     if isinstance(logpoints, Error):
@@ -238,7 +238,7 @@ class Searcher(object):
 
 def main():
   apisearcher = Searcher()
-  # apisearcher.get_logopints()
+  # apisearcher.get_logpoints()
   # apisearcher.get_allowed_repos()
   # apisearcher.get_allowed_repos_from_logpoints()
   # apisearcher.get_allowed_devices()
