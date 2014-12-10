@@ -209,29 +209,28 @@ class Searcher(object):
                 print "\n Livesearch-id[life_id] =>",livesearch.get_id(),"\n" \
                 "\n Livesearch-query => ",livesearch.get_query(),"\n" \
                 "\n Livesearch-name => ",livesearch.get_name(),"\n"
+                # response = livesearch.get_response()
+                # if isinstance(response,Error):
+                #     print "\n\n\nError\t\t\t\t\n\n\n",response.get_error_message(),"\n\n\n\n"
+                # else:
+                #     rows = response.get_rows()
+                #     print '\n\n'
+                #     print 'Displaying data from list returned from get_rows()'
+                #     print '\n\n'
 
-                response = livesearch.get_response()
-                if isinstance(response,Error):
-                    print "\n\n\nError\t\t\t\t\n\n\n",response.get_error_message(),"\n\n\n\n"
-                else:
-                    rows = response.get_rows()
-                    print '\n\n'
-                    print 'Displaying data from list returned from get_rows()'
-                    print '\n\n'
+                #     for row in rows:
+                #         print row
 
-                    for row in rows:
-                        print row
+                #     print '\n\n'
+                #     print 'Iterative process for search response'
+                #     print '\n\n'
 
-                    print '\n\n'
-                    print 'Iterative process for search response'
-                    print '\n\n'
-
-                i = response.iterate()
-                while i.has_next():
-                    dic =  i.next()
-                    for key in dic.keys():
-                        print key, ': ', dic[key]
-                    print '\n\n'
+                # i = response.iterate()
+                # while i.has_next():
+                #     dic =  i.next()
+                #     for key in dic.keys():
+                #         print key, ': ', dic[key]
+                #     print '\n\n'
             else:
                 print livesearch.get_error_message()
     print '\n\n'

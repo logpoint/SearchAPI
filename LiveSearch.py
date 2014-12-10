@@ -49,5 +49,5 @@ class LiveSearch:
         if not isinstance(self._response_string,Error):
             return Response(self._response_string)
         else:
-            self._response_string
+            return self._response_string
         
