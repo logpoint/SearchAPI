@@ -139,7 +139,7 @@ class LogPointSearcher:
 
         response = self._get_allowed_data('devices')
         if isinstance(response, Error):
-            return Response
+            return response
         
         if not response.get('success'):
             return Error(response.get('message'))
