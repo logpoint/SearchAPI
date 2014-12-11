@@ -115,7 +115,7 @@ class LogPointSearcher:
         '''
         for repo in allowed_repos:
             address, repo_name = repo.get('address'), repo.get('repo')
-            logpoint_ip, port = address.split(':')
+            # logpoint_ip, port = address.split(':')
             repos.append(Repo(logpoint[logpoint_ip], repo_name))
         return repos
 
@@ -146,7 +146,6 @@ class LogPointSearcher:
         
         allowed_devices = response['allowed_devices'];
         logpoints = response['logpoint']
-
         '''
         get all the logpoints
         '''
