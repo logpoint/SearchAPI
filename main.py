@@ -25,11 +25,13 @@ class Searcher(object):
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
     else:
-       print '\n\nGetting all allowed logpoints'
+       print 'Getting all allowed logpoints'
        print '-------------------------------'
+       count = 1
        for logpoint in logpoints:
-           print logpoint
-    print '------------------'
+           print '%s. %s' %(count,logpoint)
+           count += 1
+    print '-------------------------------'
     print '\n\n'
 
 
@@ -40,25 +42,34 @@ class Searcher(object):
     if isinstance(repos, Error):
        print 'Error : ', repos.get_error_message()
     else:
-       for repo in repos:
-           print repo
+      count = 1
+      for repo in repos:
+        print '%s. %s' %(count,repo)
+        count +=1
     print '-----------------------'
     print '\n\n'
 
 
   def get_allowed_repos_from_logpoints(self, ):
     logpoints = searcher.get_log_points()
+    
+    '''change this value accordingly'''
+    selected_logpoint = logpoints[0]
+
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
-    print 'Getting Repos From Provided LogPoints'
-    print '\n\n\nGetting Repos from ', logpoints[0]
-    repos = searcher.get_repos([logpoints[0]])
+    print'---------------------------------------------'
+    print 'Getting Repos from particular LogPoint \n', selected_logpoint
+    print'---------------------------------------------'
+    repos = searcher.get_repos([selected_logpoint])
     
     if isinstance(repos, Error):
        print 'Error : ', repos.get_error_message()
     else:
-       for repo in repos:
-           print repo
+      count = 1
+      for repo in repos:
+        print '%s. %s' %(count,repo)
+        count +=1
     print '-----------------------'
     print '\n\n'
 
@@ -70,26 +81,34 @@ class Searcher(object):
     if isinstance(devices, Error):
        print 'Error : ', devices.get_error_message()
     else:
+       count = 1
        for device in devices:
-           print device
-    print '-----------------------'
+           print '%s. %s' % (count,device)
+           count +=1
+    print '-------------------------------------------'
     print '\n\n'
 
 
   def get_allowed_devices_from_logpoints(self, ):
     logpoints = searcher.get_log_points()
+
+    '''change this value accordingly'''
+    selected_logpoint = logpoints[1]
+    
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
-    print 'Getting Devices from Particular LogPoint'
-    print 'Getting Repos from ', logpoints[0]
-    print
-    devices = searcher.get_devices([logpoints[0]])
+    print'---------------------------------------------'
+    print 'Getting Devices from particular LogPoint \n', selected_logpoint
+    print'---------------------------------------------'
+    devices = searcher.get_devices([selected_logpoint])
     if isinstance(devices, Error):
        print 'Error : ', devices.get_error_message()
     else:
+       count = 1
        for device in devices:
-           print device
-    print '-----------------------'
+           print '%s. %s' % (count,device)
+           count +=1
+    print '-------------------------------------------'
     print '\n\n'
 
 
@@ -100,7 +119,7 @@ class Searcher(object):
     if isinstance(time_zone,Error):
        print time_zone.get_error_message()
     else:
-       print time_zone
+       print 'Time Zone: %s' % time_zone
     print '-----------------------'
     print '\n\n'
 
@@ -206,9 +225,9 @@ class Searcher(object):
     else:
         for livesearch in livesearches:
             if not isinstance(livesearch,Error):
-                print "\n Livesearch-id[life_id] =>",livesearch.get_id(),"\n" \
-                "\n Livesearch-query => ",livesearch.get_query(),"\n" \
-                "\n Livesearch-name => ",livesearch.get_name(),"\n"
+                print "\n Livesearch-id[life_id] => ",livesearch.get_id(), \
+                "\n Livesearch-query       => ",livesearch.get_query(), \
+                "\n Livesearch-name        => ",livesearch.get_name(),"\n"
                 # response = livesearch.get_response()
                 # if isinstance(response,Error):
                 #     print "\n\n\nError\t\t\t\t\n\n\n",response.get_error_message(),"\n\n\n\n"
@@ -239,14 +258,14 @@ class Searcher(object):
 def main():
   apisearcher = Searcher()
   # apisearcher.get_logpoints()
+  # apisearcher.get_timezone()  
   # apisearcher.get_allowed_repos()
   # apisearcher.get_allowed_repos_from_logpoints()
-  # apisearcher.get_allowed_devices()
+  apisearcher.get_allowed_devices()
   # apisearcher.get_allowed_devices_from_logpoints()
-  # apisearcher.get_timezone()  
   # apisearcher.get_queries()
   # apisearcher.get_queries_from_logpoints()
-  apisearcher.get_livesearches()
+  # apisearcher.get_livesearches()
 
 
 if __name__ == '__main__':
