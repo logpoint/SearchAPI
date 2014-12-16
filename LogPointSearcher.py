@@ -149,8 +149,6 @@ class LogPointSearcher:
         for logpoint_row in logpoint_object:
             lp = logpoint_row.get_ip()
             logpoint_list.append(lp)
-    
-        print logpoint_list
 
         response = self._get_allowed_data('devices')
         if isinstance(response, Error):
@@ -234,7 +232,6 @@ class LogPointSearcher:
         
         try:
 	    print 'url=%s' % url
-            print data
             ack = requests.post(url, data=data, timeout=10.0, verify=False)
             print 'Raw Contents\n============\n%s' % ack.content
             print '\nFormatted Contents\n=====================\n'
