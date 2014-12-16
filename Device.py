@@ -43,7 +43,7 @@ class Device:
 
     def __str__(self):
         info = 'Device Info\n'
-        info += '\tRespective LP : ' + str(self.logpoint) + '\n'
-        info += '\tDevice IP     : '+ self.ip + '\n'
-        info += '\tDevice Name   : '+ self.name + '\n'
+        info += '\tRespective LP Name  : ' + self.logpoint.get_name() + '\n'
+        info += '\tDevice IP           : ' + self.ip + '\n'
+        info += '\tDevice Name         : ' + self.name + '\n'
         return info

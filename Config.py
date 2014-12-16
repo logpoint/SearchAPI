@@ -1,3 +1,5 @@
+#!/usr/local/bin/python
+# coding: utf-8
 class Config:
     def __init__(self):
         self.request_type = ''      # Provide request type (https/https)

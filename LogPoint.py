@@ -28,7 +28,7 @@ class LogPoint:
         return searcher.get_repos([self])
     
     def __str__(self):
-        info = 'LogPoint Info\n'
-        info += '\tName : ' + self.name + '\n'
+        # info = 'LogPoint Info\n'
+        info = '\tName : ' + self.name + '\n'
         info += '\tIP   : ' + self.ip + '\n'
         return info

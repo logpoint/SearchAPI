@@ -22,7 +22,7 @@ class LogPointSearcher:
         self.request_type = config.request_type
 
 
-    def get_log_points(self):
+    def get_log_points(self,):
         '''
         Returns list of LogPoint object
         '''
@@ -71,10 +71,8 @@ class LogPointSearcher:
         
         for logpoint_row in logpoint_object:
             lp = logpoint_row.get_ip()
-            logpoint_list.append(lp)
-
+            logpoint_list.append(lp) 
         response =  self._get_allowed_data("logpoint_repos", logpoint_list)
-
         if isinstance(response, Error):
             return response
 
@@ -83,7 +81,6 @@ class LogPointSearcher:
         
         allowed_repos = response.get('allowed_repos')
         response_logpoint_string = response.get('logpoint')
-
         if response_logpoint_string:
             '''
             get all the logpoints
@@ -115,11 +112,20 @@ class LogPointSearcher:
         '''
         for repo in allowed_repos:
             address, repo_name = repo.get('address'), repo.get('repo')
-            # logpoint_ip, port = address.split(':')
-            repos.append(Repo(logpoint[logpoint_ip], repo_name))
+            if ':' in address:
+                logpoint_ip, port = address.split(':')
+            else:
+                logpoint_ip = address
+            '''Only include the repos from logpoint list'''
+            if logpoint_list:
+                for l in logpoint_list:
+                    if l in logpoint_ip:
+                        repos.append(Repo(logpoint[logpoint_ip], repo_name))
+            else:
+                repos.append(Repo(logpoint[logpoint_ip], repo_name))
         return repos
 
-    def get_devices(self, logpoint=None):
+    def get_devices(self, logpoint_object=None):
         '''
         Search for devices for which the user have permission to access
         according to credential provided
@@ -133,9 +139,18 @@ class LogPointSearcher:
 
         Returns list of Device object
         '''
+        if not logpoint_object:
+            logpoint_object = []
         
-        devices = []
+        devices = []        
         logpoint = {}
+        logpoint_list = []
+            
+        for logpoint_row in logpoint_object:
+            lp = logpoint_row.get_ip()
+            logpoint_list.append(lp)
+    
+        print logpoint_list
 
         response = self._get_allowed_data('devices')
         if isinstance(response, Error):
@@ -219,8 +234,10 @@ class LogPointSearcher:
         
         try:
 	    print 'url=%s' % url
+            print data
             ack = requests.post(url, data=data, timeout=10.0, verify=False)
-            print ack.content
+            print 'Raw Contents\n============\n%s' % ack.content
+            print '\nFormatted Contents\n=====================\n'
         except Exception, e:
             return Error(str(e))
 #            print resp
