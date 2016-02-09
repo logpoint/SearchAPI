@@ -21,7 +21,7 @@ class Searcher(object):
 
   def get_logpoints(self, ):
     print 'Getting LogPoints'
-    logpoints = searcher.get_log_points()
+    logpoints = searcher.get_log_points(True)
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
     else:
@@ -90,14 +90,14 @@ class Searcher(object):
 
 
   def get_allowed_devices_from_logpoints(self, ):
-    logpoints = searcher.get_log_points()
+    logpoints = searcher.get_log_points(False)
 
     '''change this value accordingly'''
     selected_logpoint = logpoints[1]
     
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
-    print'---------------------------------------------'
+    print'\n\n---------------------------------------------'
     print 'Getting Devices from particular LogPoint \n', selected_logpoint
     print'---------------------------------------------'
     devices = searcher.get_devices([selected_logpoint])
@@ -127,14 +127,12 @@ class Searcher(object):
   def get_queries(self, ):
     print 'Query Search from all available LogPoints'
     # type = simple
-    # query = 'error'
-    # type = chart
-    # query = "| chart count() as Count, sum(sig_id) as SID by device_ip, source_name"
-    # type = timechart
-    query = "| timechart count() as C, sum(sig_id) as SSID by device_ip, col_type"
-
-    search_job = searcher.search(query)
-
+    query = ''
+    
+    repos_list = []
+    time_range = 'Last 24 hours'
+    search_job = searcher.search(query, time_range, repos_list)
+    print type(search_job)
     if isinstance(search_job, Error):
        print 'Error : ', search_job.get_error_message()
        exit()
@@ -188,7 +186,7 @@ class Searcher(object):
     
     
     print repos_list
-    search_job = searcher.search(query, 'Last 30 days', repos_list)
+    search_job = searcher.search(query,  time_range, repos_list)
     
     if isinstance(search_job, Error):
        print 'Error : ', search_job.get_error_message()

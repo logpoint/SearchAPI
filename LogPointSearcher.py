@@ -22,7 +22,7 @@ class LogPointSearcher:
         self.request_type = config.request_type
 
 
-    def get_log_points(self,):
+    def get_log_points(self, raw_data = False):
         '''
         Returns list of LogPoint object
         '''
@@ -33,7 +33,7 @@ class LogPointSearcher:
 
         logpoints = []
         
-        response = self._get_allowed_data('loginspects')
+        response = self._get_allowed_data('loginspects', raw_data=raw_data)
         if isinstance(response, Error):
             return response
         else:
@@ -70,9 +70,8 @@ class LogPointSearcher:
         logpoint_list = []
         
         for logpoint_row in logpoint_object:
-            lp = logpoint_row.get_ip()
-            logpoint_list.append(lp) 
-        response =  self._get_allowed_data("logpoint_repos", logpoint_list)
+            logpoint_list.append({'name':logpoint_row.get_name(),'ip':logpoint_row.get_ip()})
+        response =  self._get_allowed_data("logpoint_repos", True, logpoint_list)
         if isinstance(response, Error):
             return response
 
@@ -119,7 +118,7 @@ class LogPointSearcher:
             '''Only include the repos from logpoint list'''
             if logpoint_list:
                 for l in logpoint_list:
-                    if l in logpoint_ip:
+                    if l['ip'] in logpoint_ip:
                         repos.append(Repo(logpoint[logpoint_ip], repo_name))
             else:
                 repos.append(Repo(logpoint[logpoint_ip], repo_name))
@@ -141,16 +140,13 @@ class LogPointSearcher:
         '''
         if not logpoint_object:
             logpoint_object = []
-        
         devices = []        
         logpoint = {}
         logpoint_list = []
             
         for logpoint_row in logpoint_object:
-            lp = logpoint_row.get_ip()
-            logpoint_list.append(lp)
-
-        response = self._get_allowed_data('devices')
+            logpoint_list.append({'name':logpoint_row.get_name(),'ip':logpoint_row.get_ip()})
+        response = self._get_allowed_data('devices', True, logpoint_list)
         if isinstance(response, Error):
             return response
         
@@ -167,14 +163,11 @@ class LogPointSearcher:
             logpoint_name = logpt.get('name')
             logpoint[logpoint_ip] = LogPoint(logpoint_ip, logpoint_name)
         
-
-        for i in range(len(allowed_devices)):
-            data = allowed_devices[i]
+        for data in allowed_devices:
             if type(data) is dict:
                 for row in data:
                     lp, ip = row.split('/')
                     devices.append(Device(ip, data[row], logpoint[lp]))
-        
         return devices
 
     def get_live_searches(self):
@@ -219,22 +212,24 @@ class LogPointSearcher:
 
         return self._get_search_job(query, timerange, repo, timeout, limit)
 
-    def _get_allowed_data(self, data_type, logpoints=None):
+    def _get_allowed_data(self, data_type, raw_data=False, logpoints=''):
         url = "%s://%s/%s" % (self.request_type, self.ip, "getalloweddata")
-
+        if logpoints and isinstance(logpoints, list):
+            logpoints = json.dumps(logpoints)
         data = {
                 "username": self.username,
                 "secret_key": self.secert_key,
                 "type": data_type,
-                "logpoints": json.dumps(logpoints)
+                "logpoints": logpoints
                 }
 
-        
         try:
-	    print 'url=%s' % url
+	    
             ack = requests.post(url, data=data, timeout=10.0, verify=False)
-            print 'Raw Contents\n============\n%s' % ack.content
-            print '\nFormatted Contents\n=====================\n'
+            if raw_data:
+                print '\n\nurl=%s' % url
+                print 'Raw Contents\n============\n%s' % ack.content
+                print '\nFormatted Contents\n=====================\n'
         except Exception, e:
             return Error(str(e))
 #            print resp
