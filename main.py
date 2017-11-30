@@ -53,11 +53,11 @@ class Searcher(object):
   def get_allowed_repos_from_logpoints(self, ):
     logpoints = searcher.get_log_points()
     
-    '''change this value accordingly'''
-    selected_logpoint = logpoints[0]
-
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
+       return
+    '''change this value accordingly'''
+    selected_logpoint = logpoints[0]
     print'---------------------------------------------'
     print 'Getting Repos from particular LogPoint \n', selected_logpoint
     print'---------------------------------------------'
@@ -92,11 +92,15 @@ class Searcher(object):
   def get_allowed_devices_from_logpoints(self, ):
     logpoints = searcher.get_log_points(False)
 
-    '''change this value accordingly'''
-    selected_logpoint = logpoints[1]
+    
     
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
+       return
+    
+    '''change this value accordingly'''
+    selected_logpoint = logpoints[1]
+    
     print'\n\n---------------------------------------------'
     print 'Getting Devices from particular LogPoint \n', selected_logpoint
     print'---------------------------------------------'
@@ -165,6 +169,7 @@ class Searcher(object):
     logpoints = searcher.get_log_points()
     if isinstance(logpoints, Error):
        print 'Error : ', logpoints.get_error_message()
+       return
    
     print 'Query Search from particular LogPoints'
     # uncomment line 8 to 10
