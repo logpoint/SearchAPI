@@ -40,7 +40,7 @@ class Response:
 
         self.response_string = response_string
         self.data = {}
-        type = self.response_string.get('type');
+        type = self.response_string.get('query_type')
         if (type == "search"):
             self._parse_search_type()
             self._parse_simple_rows_data()
@@ -125,7 +125,7 @@ class Response:
         self._grouping = response_string.get('grouping')
         self._final = response_string.get('final')
         self._columns = response_string.get('columns')
-        self._aliases = response_string.get('aliases')
+        self._aliases = response_string.get('aliases', [])
 
 
     def _parse_simple_rows_data(self):
@@ -153,7 +153,9 @@ class Response:
         aliases = self._aliases
         group_index = self._find_grouping_index('group', aliases)
         grouping = self._grouping
-
+        if group_index == -1:
+            self._rows = self._raw_row
+            return
         for row in self._raw_row:
             self._count += 1
             row_data = {}
