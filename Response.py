@@ -189,7 +189,9 @@ class Response:
         aliases = self._aliases
         group_index = self._find_grouping_index('group', aliases)
         grouping = self._grouping
-
+        if group_index == -1:
+            self._rows = self._raw_row
+            return
         for row in self._raw_row:
             self._count += 1
             row_data = {}
