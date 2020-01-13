@@ -55,6 +55,9 @@ class Response:
 
 
     def is_final(self):
+        final = self.response_string.get('final')
+        if final:
+            self._final = final
         return self._final
 
     def get_version(self):
