@@ -41,7 +41,7 @@ class Response:
         self.response_string = response_string
         self.data = {}
         type = self.response_string.get('query_type')
-        if (type == "search"):
+        if (type == "search" or type == "simple"):
             self._parse_search_type()
             self._parse_simple_rows_data()
 
